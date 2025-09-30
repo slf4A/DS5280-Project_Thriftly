@@ -13,7 +13,7 @@ function Hero() {
         journey.
       </p>
       <img
-        src="https://placehold.co/1200x500"
+        src="/product/1200 x 500.jpg"
         alt="Hero Banner"
         className="img-fluid my-4"
       />
