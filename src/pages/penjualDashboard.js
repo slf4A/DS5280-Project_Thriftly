@@ -92,6 +92,20 @@ function SellerDashboard() {
           >
             Lihat Produk
           </button>
+          
+          <button
+            onClick={() => navigate("/riwayat-pembayaran")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "white",
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Riwayat Pembayaran
+          </button>
 
           {/* Tombol Logout */}
           <button

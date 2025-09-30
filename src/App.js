@@ -9,6 +9,8 @@ import RoleBasedRoute from "./components/Rolebased";
 import UploadProduk from "./pages/UploadProduk";
 import DaftarProduk from "./pages/DaftarProduk";
 import RiwayatPesanan from "./pages/RiwayatPesanan";
+import RiwayatPembayaran from "./pages/RiwayatPembayaran";
+
 
 function App() {
   return (
@@ -67,6 +69,11 @@ function App() {
             </RoleBasedRoute>
           }
         />    
+
+        <Route 
+        path="/riwayat-pembayaran" 
+        element={<RiwayatPembayaran />} />
+
         
 
         {/* fallback */}
