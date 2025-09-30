@@ -33,16 +33,23 @@ function SellerDashboard() {
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "28px", fontWeight: "600", marginBottom: "10px" }}>
+        <h1
+          style={{
+            fontSize: "28px",
+            fontWeight: "600",
+            marginBottom: "10px",
+          }}
+        >
           Dashboard Penjual
         </h1>
         <p style={{ marginBottom: "25px", color: "#6b7280" }}>
-          Halo, {user?.email || "Penjual"}   
-          {" "}Kelola produkmu di Thriftly!
+          Halo, {user?.email || "Penjual"} Kelola produkmu di Thriftly!
         </p>
 
         <div style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
+          {/* Tombol Tambah Produk */}
           <button
+            onClick={() => navigate("/upload")}
             style={{
               padding: "12px 20px",
               borderRadius: "8px",
@@ -55,7 +62,10 @@ function SellerDashboard() {
           >
             Tambah Produk
           </button>
+
+          {/* Tombol Lihat Pesanan */}
           <button
+            onClick={() => navigate("/riwayat-pesanan")}
             style={{
               padding: "12px 20px",
               borderRadius: "8px",
@@ -67,6 +77,37 @@ function SellerDashboard() {
           >
             Lihat Pesanan
           </button>
+
+          {/* Tombol Lihat Produk */}
+          <button
+            onClick={() => navigate("/produk")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "white",
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Lihat Produk
+          </button>
+          
+          <button
+            onClick={() => navigate("/riwayat-pembayaran")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "white",
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Riwayat Pembayaran
+          </button>
+
+          {/* Tombol Logout */}
           <button
             onClick={handleLogout}
             style={{

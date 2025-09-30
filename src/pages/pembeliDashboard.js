@@ -56,6 +56,20 @@ function BuyerDashboard() {
             Lihat Keranjang
           </button>
           <button
+            onClick={() => navigate("/riwayat-pembayaran")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "white",
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Riwayat Pembayaran
+          </button>
+
+          <button
             onClick={handleLogout}
             style={{
               padding: "12px 20px",
