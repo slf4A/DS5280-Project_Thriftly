@@ -37,12 +37,13 @@ function SellerDashboard() {
           Dashboard Penjual
         </h1>
         <p style={{ marginBottom: "25px", color: "#6b7280" }}>
-          Halo, {user?.email || "Penjual"}   
-          {" "}Kelola produkmu di Thriftly!
+          Halo, {user?.email || "Penjual"} Kelola produkmu di Thriftly!
         </p>
 
         <div style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
+          {/* Tombol Tambah Produk */}
           <button
+            onClick={() => navigate("/upload")}
             style={{
               padding: "12px 20px",
               borderRadius: "8px",
@@ -55,7 +56,10 @@ function SellerDashboard() {
           >
             Tambah Produk
           </button>
+
+          {/* Tombol Lihat Pesanan */}
           <button
+            onClick={() => navigate("/riwayat-pesanan")}
             style={{
               padding: "12px 20px",
               borderRadius: "8px",
@@ -67,6 +71,8 @@ function SellerDashboard() {
           >
             Lihat Pesanan
           </button>
+
+          {/* Tombol Logout */}
           <button
             onClick={handleLogout}
             style={{
