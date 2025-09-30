@@ -8,6 +8,7 @@ import BuyerDashboard from "./pages/pembeliDashboard";
 import RoleBasedRoute from "./components/Rolebased";
 import UploadProduk from "./pages/UploadProduk";
 import DaftarProduk from "./pages/DaftarProduk";
+import RiwayatPesanan from "./pages/RiwayatPesanan";
 
 function App() {
   return (
@@ -57,6 +58,16 @@ function App() {
             </RoleBasedRoute>
           }
         />
+
+        <Route
+          path="/riwayat-pesanan"
+          element={
+            <RoleBasedRoute allowedRole="seller">
+              <RiwayatPesanan />
+            </RoleBasedRoute>
+          }
+        />    
+        
 
         {/* fallback */}
         <Route path="*" element={<Home />} />
