@@ -3,14 +3,14 @@ const cartItems = [
     id: 1,
     name: 'Cappuccino "Oryx" blouson',
     price: 6900000,
-    img: "https://placehold.co/80x100",
+    img: "/product/product1.jpeg",
     qty: 1,
   },
   {
     id: 2,
     name: "Pale caramel classic shirt",
     price: 1025000,
-    img: "https://placehold.co/80x100",
+    img: "/product/product2.jpeg",
     qty: 2,
   },
 ];
