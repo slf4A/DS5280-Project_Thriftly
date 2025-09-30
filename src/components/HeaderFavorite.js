@@ -3,19 +3,19 @@ const favorites = [
     id: 1,
     name: 'Cappuccino "Oryx" blouson',
     price: 6900000,
-    img: "https://placehold.co/80x100",
+    img: "/product/product1.jpeg",
   },
   {
     id: 2,
     name: "Pale caramel classic shirt",
     price: 1025000,
-    img: "https://placehold.co/80x100",
+    img: "/product/product2.jpeg",
   },
   {
     id: 3,
     name: "Black lambskin jacket",
     price: 5500000,
-    img: "https://placehold.co/80x100",
+    img: "/product/product3.jpeg",
   },
 ];
 
