@@ -14,7 +14,7 @@ function UploadProduk() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setGambar(reader.result); // hasil base64 gambar
+        setGambar(reader.result); 
       };
       reader.readAsDataURL(file);
     }

@@ -33,7 +33,13 @@ function SellerDashboard() {
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "28px", fontWeight: "600", marginBottom: "10px" }}>
+        <h1
+          style={{
+            fontSize: "28px",
+            fontWeight: "600",
+            marginBottom: "10px",
+          }}
+        >
           Dashboard Penjual
         </h1>
         <p style={{ marginBottom: "25px", color: "#6b7280" }}>
@@ -70,6 +76,21 @@ function SellerDashboard() {
             }}
           >
             Lihat Pesanan
+          </button>
+
+          {/* Tombol Lihat Produk */}
+          <button
+            onClick={() => navigate("/produk")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              backgroundColor: "white",
+              cursor: "pointer",
+              transition: "0.2s",
+            }}
+          >
+            Lihat Produk
           </button>
 
           {/* Tombol Logout */}

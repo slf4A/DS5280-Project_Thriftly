@@ -7,6 +7,7 @@ import SellerDashboard from "./pages/penjualDashboard";
 import BuyerDashboard from "./pages/pembeliDashboard";
 import RoleBasedRoute from "./components/Rolebased";
 import UploadProduk from "./pages/UploadProduk";
+import DaftarProduk from "./pages/DaftarProduk";
 
 function App() {
   return (
@@ -43,6 +44,16 @@ function App() {
           element={
             <RoleBasedRoute allowedRole="seller">
               <UploadProduk />
+            </RoleBasedRoute>
+          }
+        />
+
+        {/* Daftar Produk */}
+        <Route
+          path="/produk"
+          element={
+            <RoleBasedRoute allowedRole="seller">
+              <DaftarProduk />
             </RoleBasedRoute>
           }
         />
