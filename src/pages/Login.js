@@ -32,7 +32,7 @@ function Login() {
     if (role === "seller") {
       navigate("/seller");
     } else {
-      navigate("/buyer");
+      navigate("/Home");
     }
   };
 

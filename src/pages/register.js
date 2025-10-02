@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user"); // ✅ tambahin state role
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push({ email, password });
+    users.push({ email, password, role });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Registrasi berhasil! Silakan login.");
@@ -79,6 +80,25 @@ function Register() {
                 fontSize: "0.95rem",
               }}
             />
+          </div>
+
+          {/* Dropdown role */}
+          <div style={{ marginBottom: "20px" }}>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "12px",
+                borderRadius: "8px",
+                border: "1px solid #d1d5db",
+                fontSize: "0.95rem",
+              }}
+            >
+              <option value="user">User</option>
+              <option value="seller">Seller</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <button
