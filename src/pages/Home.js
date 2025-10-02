@@ -13,7 +13,7 @@ const productsData = [
     img: "/product/product1.jpeg",
     material: "Cashmere",
     color: "Brown",
-    size: "L"
+    size: "L",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const productsData = [
     img: "/product/product2.jpeg",
     material: "Cotton",
     color: "Beige",
-    size: "M"
+    size: "M",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const productsData = [
     img: "/product/product3.jpeg",
     material: "Leather",
     color: "Black",
-    size: "XL"
+    size: "XL",
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const productsData = [
     img: "/product/product4.jpeg",
     material: "Wool",
     color: "Navy",
-    size: "L"
+    size: "L",
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const productsData = [
     img: "/product/product1.jpeg",
     material: "Cotton",
     color: "White",
-    size: "M"
+    size: "M",
   },
   {
     id: 6,
@@ -63,15 +63,15 @@ const productsData = [
     img: "/product/product2.jpeg",
     material: "Leather",
     color: "Black",
-    size: "L"
-  }
+    size: "L",
+  },
 ];
 
 const filterOptions = [
   { label: "Material Cotton", value: "Cotton" },
   { label: "Material Leather", value: "Leather" },
   { label: "Color White", value: "White" },
-  { label: "Color Black", value: "Black" }
+  { label: "Color Black", value: "Black" },
 ];
 
 function Home() {
@@ -144,7 +144,7 @@ function Home() {
         <div className="row g-5">
           {filteredProducts.map((item) => (
             <div className="col-md-4" key={item.id}>
-              <div className="position-relative text-center">
+              <div className="position-relative text-center h-100 d-flex flex-column">
                 {/* Floating like button */}
                 <button
                   className="btn-like"
