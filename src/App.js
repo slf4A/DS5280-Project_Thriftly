@@ -1,10 +1,12 @@
-import "./App.css"
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ChatPopup from "./components/ChatPopup";
 
 import Home from "./pages/Home";
+import Register from "./pages/register";
+import Login from "./pages/Login";
 
 import SellerDashboard from "./pages/penjualDashboard";
 import BuyerDashboard from "./pages/pembeliDashboard";
@@ -14,15 +16,12 @@ import DaftarProduk from "./pages/DaftarProduk";
 import RiwayatPesanan from "./pages/RiwayatPesanan";
 import RiwayatPembayaran from "./pages/RiwayatPembayaran";
 
-
-
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-
 
         {/* Auth */}
         <Route path="/register" element={<Register />} />
@@ -73,22 +72,16 @@ function App() {
               <RiwayatPesanan />
             </RoleBasedRoute>
           }
-        />    
+        />
 
-        <Route 
-        path="/riwayat-pembayaran" 
-        element={<RiwayatPembayaran />} />
-
-        
+        <Route path="/riwayat-pembayaran" element={<RiwayatPembayaran />} />
 
         {/* fallback */}
         <Route path="*" element={<Home />} />
       </Routes>
 
-      </Routes>
       <Footer />
       <ChatPopup />
-
     </Router>
   );
 }
