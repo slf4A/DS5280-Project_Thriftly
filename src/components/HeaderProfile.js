@@ -1,4 +1,18 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 function HeaderProfile() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // hapus data login dari localStorage
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("token"); // kalau ada token
+
+    // redirect ke register
+    navigate("/register");
+  };
+
   return (
     <div
       className="offcanvas offcanvas-end"
@@ -25,13 +39,23 @@ function HeaderProfile() {
             <label htmlFor="email" className="form-label">
               Email address
             </label>
-            <input type="email" className="form-control" id="email" placeholder="you@example.com" />
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="you@example.com"
+            />
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
             </label>
-            <input type="password" className="form-control" id="password" placeholder="********" />
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="********"
+            />
           </div>
           <button type="submit" className="btn btn-dark w-100">
             Login
@@ -39,8 +63,18 @@ function HeaderProfile() {
         </form>
         <hr />
         <p className="small text-center">
-          Don’t have an account? <a href="#register">Register</a>
+          Don’t have an account? <a href="/register">Register</a>
         </p>
+
+        {/* Logout link */}
+        <p 
+          onClick={handleLogout} 
+          className="text-danger text-center mt-3"
+          style={{ cursor: "pointer" }}
+        >
+          Logout
+        </p>
+
       </div>
     </div>
   );

@@ -42,15 +42,15 @@ function DaftarProduk() {
                 boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
               }}
             >
-              <img
+            <img
                 src={produk.gambar}
                 alt={produk.nama}
                 style={{
                   width: "100%",
                   height: "200px",
-                  objectFit: "cover",
+                  objectFit: "contain",   // atau "cover"
                   borderRadius: "8px",
-                  marginBottom: "10px",
+                  marginBottom: "10px"
                 }}
               />
               <h3 style={{ marginBottom: "5px" }}>{produk.nama}</h3>
