@@ -77,7 +77,7 @@ const filterOptions = [
 function Home() {
   const [filter, setFilter] = useState(null);
   const [liked, setLiked] = useState([]); // simpan id produk yang di-like
-  const [cart, setCart] = useState([]);
+  const [cart] = useState([]);
 
   const toggleLike = (id) => {
     setLiked((prev) =>
