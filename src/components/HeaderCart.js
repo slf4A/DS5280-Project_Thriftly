@@ -1,17 +1,22 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { Trash, Plus, Minus } from "react-feather";
 
 const formatRupiah = (value) =>
   value.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
-    minimumFractionDigits: 0
+    minimumFractionDigits: 0,
   });
 
 function HeaderCart() {
-  const { cart } = useCart();
+  const { cart, removeFromCart, increaseQty, decreaseQty } = useCart();
   const navigate = useNavigate();
-  const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.qty || 0), 0);
+
+  const total = cart.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.qty || 0),
+    0
+  );
 
   return (
     <div
@@ -31,6 +36,7 @@ function HeaderCart() {
           aria-label="Close"
         />
       </div>
+
       <div className="offcanvas-body d-flex flex-column">
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
@@ -48,15 +54,43 @@ function HeaderCart() {
                     className="me-3 rounded"
                     style={{ width: "60px", height: "75px", objectFit: "cover" }}
                   />
+
                   <div className="flex-grow-1">
                     <h6 className="m-0">{item.name}</h6>
                     <small className="text-muted">
-                      {item.qty} × {formatRupiah(item.price || 0)}
+                      {formatRupiah(item.price)}
                     </small>
+
+                    {/* Qty Buttons */}
+                    <div className="d-flex align-items-center mt-1">
+                      <button
+                        className="btn btn-sm btn-outline-dark"
+                        onClick={() => decreaseQty(item.id)}
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="mx-2">{item.qty}</span>
+                      <button
+                        className="btn btn-sm btn-outline-dark"
+                        onClick={() => increaseQty(item.id)}
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
                   </div>
-                  <span className="fw-bold">
-                    {formatRupiah((item.price || 0) * (item.qty || 0))}
+
+                  {/* Subtotal */}
+                  <span className="fw-bold me-3">
+                    {formatRupiah(item.qty * item.price)}
                   </span>
+
+                  {/* Delete Item */}
+                  <button
+                    className="btn btn-sm btn-outline-danger"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    <Trash size={16} />
+                  </button>
                 </li>
               ))}
             </ul>
