@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import ChatPopup from "./components/ChatPopup";
 
 import Home from "./pages/Home";
-import Register from "./pages/Register";
+import Register from "./pages/register";
 import Login from "./pages/Login";
 import Collection from "./pages/Collection";
 
