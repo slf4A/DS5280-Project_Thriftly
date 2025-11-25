@@ -13,7 +13,7 @@ function Hero() {
         journey.
       </p>
       <img
-        src="/product/1200 x 500.jpg"
+        src="/hero.jpg"
         alt="Hero Banner"
         className="img-fluid my-4"
       />

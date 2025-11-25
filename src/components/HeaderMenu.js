@@ -1,4 +1,9 @@
+import { Link } from "react-router-dom";
+
 function HeaderMenu() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const dashboardLink = user?.role === "seller" ? "/seller" : user?.role === "buyer" ? "/buyer" : "/login";
+
   return (
     <div
       className="offcanvas offcanvas-start"
@@ -20,24 +25,19 @@ function HeaderMenu() {
       <div className="offcanvas-body">
         <ul className="list-unstyled">
           <li>
-            <a href="#home" className="text-decoration-none text-black d-block py-2">
+            <Link to="/home" className="text-decoration-none text-black d-block py-2">
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#collection" className="text-decoration-none text-black d-block py-2">
+            <Link to="/collection" className="text-decoration-none text-black d-block py-2">
               Collection
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#about" className="text-decoration-none text-black d-block py-2">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="text-decoration-none text-black d-block py-2">
-              Contact
-            </a>
+            <Link to={dashboardLink} className="text-decoration-none text-black d-block py-2">
+              Dashboard
+            </Link>
           </li>
         </ul>
       </div>

@@ -1,21 +1,57 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
+const authCardStyle = {
+  background: "white",
+  padding: "40px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+  width: "100%",
+  maxWidth: "420px",
+  textAlign: "center",
+};
+
+const authInputStyle = {
+  width: "100%",
+  padding: "12px",
+  borderRadius: "8px",
+  border: "1px solid #d1d5db",
+  outline: "none",
+  fontSize: "0.95rem",
+};
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user"); 
+  const [role, setRole] = useState("buyer");
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push({ email, password, role });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Registrasi berhasil! Silakan login.");
-    navigate("/login");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        const roleMap = JSON.parse(localStorage.getItem("userRoles")) || {};
+        roleMap[cred.user.email] = role;
+        localStorage.setItem("userRoles", JSON.stringify(roleMap));
+        localStorage.setItem("user", JSON.stringify({ email: cred.user.email, role }));
+        alert("Registrasi berhasil!");
+        if (role === "seller") {
+          navigate("/seller");
+        } else {
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.code === "auth/configuration-not-found") {
+          alert("Firebase Auth belum dikonfigurasi untuk Email/Password. Pastikan metode Email/Password di-enable di Firebase Console dan env .env sudah terisi konfigurasi project.");
+        } else {
+          alert("Registrasi gagal. Pastikan email valid, password kuat, dan konfigurasi Firebase sudah benar.");
+        }
+      });
   };
 
   return (
@@ -31,15 +67,7 @@ function Register() {
       }}
     >
       <div
-        style={{
-          background: "white",
-          padding: "40px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-          width: "100%",
-          maxWidth: "400px",
-          textAlign: "center",
-        }}
+        style={authCardStyle}
       >
         <h2 style={{ marginBottom: "25px", fontWeight: "600" }}>
           Get Your New Thriftly!
@@ -53,14 +81,7 @@ function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #d1d5db",
-                outline: "none",
-                fontSize: "0.95rem",
-              }}
+              style={authInputStyle}
             />
           </div>
 
@@ -71,18 +92,10 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #d1d5db",
-                outline: "none",
-                fontSize: "0.95rem",
-              }}
+              style={authInputStyle}
             />
           </div>
 
-          {/* Dropdown role */}
           <div style={{ marginBottom: "20px" }}>
             <select
               value={role}
@@ -95,9 +108,8 @@ function Register() {
                 fontSize: "0.95rem",
               }}
             >
-              <option value="user">User</option>
+              <option value="buyer">Buyer</option>
               <option value="seller">Seller</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
 
@@ -132,7 +144,7 @@ function Register() {
               cursor: "pointer",
             }}
           >
-            Login
+            Login di sini
           </span>
         </p>
       </div>

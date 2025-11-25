@@ -1,19 +1,5 @@
-const cartItems = [
-  {
-    id: 1,
-    name: 'Cappuccino "Oryx" blouson',
-    price: 6900000,
-    img: "/product/product1.jpeg",
-    qty: 1,
-  },
-  {
-    id: 2,
-    name: "Pale caramel classic shirt",
-    price: 1025000,
-    img: "/product/product2.jpeg",
-    qty: 2,
-  },
-];
+import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const formatRupiah = (value) =>
   value.toLocaleString("id-ID", {
@@ -23,7 +9,9 @@ const formatRupiah = (value) =>
   });
 
 function HeaderCart() {
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const { cart } = useCart();
+  const navigate = useNavigate();
+  const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.qty || 0), 0);
 
   return (
     <div
@@ -44,12 +32,12 @@ function HeaderCart() {
         />
       </div>
       <div className="offcanvas-body d-flex flex-column">
-        {cartItems.length === 0 ? (
+        {cart.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <>
             <ul className="list-unstyled flex-grow-1">
-              {cartItems.map((item) => (
+              {cart.map((item) => (
                 <li
                   key={item.id}
                   className="d-flex align-items-center mb-3 border-bottom pb-2"
@@ -63,11 +51,11 @@ function HeaderCart() {
                   <div className="flex-grow-1">
                     <h6 className="m-0">{item.name}</h6>
                     <small className="text-muted">
-                      {item.qty} × {formatRupiah(item.price)}
+                      {item.qty} × {formatRupiah(item.price || 0)}
                     </small>
                   </div>
                   <span className="fw-bold">
-                    {formatRupiah(item.price * item.qty)}
+                    {formatRupiah((item.price || 0) * (item.qty || 0))}
                   </span>
                 </li>
               ))}
@@ -78,7 +66,12 @@ function HeaderCart() {
                 <span>Total</span>
                 <span>{formatRupiah(total)}</span>
               </div>
-              <button className="btn btn-dark w-100">Go to Checkout</button>
+              <button
+                className="btn btn-dark w-100"
+                onClick={() => navigate("/checkout")}
+              >
+                Go to Checkout
+              </button>
             </div>
           </>
         )}

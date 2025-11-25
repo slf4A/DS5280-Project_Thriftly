@@ -1,45 +1,82 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ChatPopup from "./components/ChatPopup";
 
 import Home from "./pages/Home";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Collection from "./pages/Collection";
 
-import SellerDashboard from "./pages/penjualDashboard";
-import BuyerDashboard from "./pages/pembeliDashboard";
-import RoleBasedRoute from "./components/Rolebased";
-import ProtectedRoute from "./components/Protectroute";
+import SellerDashboard from "./pages/SellerDashboard";
+import BuyerDashboard from "./pages/BuyerDashboard";
+import RoleBasedRoute from "./components/RoleBasedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import UploadProduk from "./pages/UploadProduk";
 import DaftarProduk from "./pages/DaftarProduk";
 import RiwayatPesanan from "./pages/RiwayatPesanan";
 import RiwayatPembayaran from "./pages/RiwayatPembayaran";
+import Checkout from "./pages/Checkout";
+import { auth } from "./firebase";
+import { CartProvider } from "./context/CartContext";
+import { FavoriteProvider } from "./context/FavoriteContext";
 
 function App() {
-  const isLoggedIn = localStorage.getItem("currentUser"); // simpan saat login
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const roleMap = JSON.parse(localStorage.getItem("userRoles")) || {};
+        const role = roleMap[user.email] || "buyer";
+        localStorage.setItem("user", JSON.stringify({ email: user.email, role }));
+      } else {
+        localStorage.removeItem("user");
+      }
+      setIsReady(true);
+    });
+    return unsub;
+  }, []);
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const isLoggedIn = Boolean(currentUser);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <Router>
-      <Header />
+      <CartProvider>
+        <FavoriteProvider>
+          <AppLayout isLoggedIn={isLoggedIn} />
+        </FavoriteProvider>
+      </CartProvider>
+    </Router>
+  );
+}
+
+function AppLayout({ isLoggedIn }) {
+  const location = useLocation();
+  const path = location.pathname.toLowerCase();
+  const hideChrome = path === "/login" || path === "/register";
+
+  return (
+    <>
+      {!hideChrome && <Header />}
       <Routes>
-        {/* Register sebagai halaman awal */}
-        <Route path="/" element={<Register />} />
-
-        {/* Auth */}
+        {/* Landing */}
+        <Route path="/" element={<Home />} />
+        <Route path="/collection" element={<Collection />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <Login />} />
+        <Route path="/login" element={<Login />} />
 
-        {/* Home page - semua user setelah login diarahkan ke sini */}
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
+        {/* Home page - accessible without login */}
+        <Route path="/home" element={<Home />} />
 
         {/* Dashboard khusus role */}
         <Route
@@ -89,14 +126,21 @@ function App() {
         />
 
         {/* Riwayat Pembayaran */}
-        <Route path="/riwayat-pembayaran" element={<RiwayatPembayaran />} />
+        <Route
+          path="/riwayat-pembayaran"
+          element={
+            <ProtectedRoute>
+              <RiwayatPembayaran />
+            </ProtectedRoute>
+          }
+        />
 
         {/* fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <Footer />
-      <ChatPopup />
-    </Router>
+      {!hideChrome && <Footer />}
+      {!hideChrome && <ChatPopup />}
+    </>
   );
 }
 

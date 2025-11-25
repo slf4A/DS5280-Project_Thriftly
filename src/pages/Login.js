@@ -1,39 +1,50 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
+const authCardStyle = {
+  background: "white",
+  padding: "40px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+  width: "100%",
+  maxWidth: "420px",
+  textAlign: "center",
+};
+
+const authInputStyle = {
+  width: "100%",
+  padding: "12px",
+  borderRadius: "8px",
+  border: "1px solid #d1d5db",
+  outline: "none",
+  fontSize: "0.95rem",
+};
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("buyer");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const foundUser = users.find(
-      (u) => u.email === email && u.password === password
-    );
-
-    if (!foundUser) {
-      alert("Email atau password salah!");
-      return;
-    }
-
-    // login sukses > simpan user + role
-    const userData = {
-      email,
-      role,
-    };
-
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    // arahkan sesuai role
-    if (role === "seller") {
-      navigate("/seller");
-    } else {
-      navigate("/Home");
-    }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        const roleMap = JSON.parse(localStorage.getItem("userRoles")) || {};
+        const role = roleMap[cred.user.email] || "buyer";
+        localStorage.setItem("user", JSON.stringify({ email: cred.user.email, role }));
+        if (role === "seller") {
+          navigate("/seller");
+        } else {
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Login gagal. Periksa email/password atau coba lagi.");
+      });
   };
 
   return (
@@ -49,18 +60,10 @@ function Login() {
       }}
     >
       <div
-        style={{
-          background: "white",
-          padding: "40px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-          width: "100%",
-          maxWidth: "400px",
-          textAlign: "center",
-        }}
+        style={authCardStyle}
       >
         <h2 style={{ marginBottom: "25px", fontWeight: "600" }}>
-          Login and Let’s Thrift
+          Login to Thriftly
         </h2>
 
         <form onSubmit={handleLogin} style={{ textAlign: "left" }}>
@@ -71,14 +74,7 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #d1d5db",
-                outline: "none",
-                fontSize: "0.95rem",
-              }}
+              style={authInputStyle}
             />
           </div>
 
@@ -89,39 +85,8 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #d1d5db",
-                outline: "none",
-                fontSize: "0.95rem",
-              }}
+              style={authInputStyle}
             />
-          </div>
-
-          {/* Pilih role */}
-          <div style={{ marginBottom: "20px", fontSize: "0.95rem" }}>
-            <label style={{ marginRight: "15px" }}>
-              <input
-                type="radio"
-                value="buyer"
-                checked={role === "buyer"}
-                onChange={() => setRole("buyer")}
-                style={{ marginRight: "6px" }}
-              />
-              Pembeli
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="seller"
-                checked={role === "seller"}
-                onChange={() => setRole("seller")}
-                style={{ marginRight: "6px" }}
-              />
-              Penjual
-            </label>
           </div>
 
           <button
@@ -144,6 +109,20 @@ function Login() {
             Login
           </button>
         </form>
+
+        <p style={{ marginTop: "20px", fontSize: "0.9rem", color: "#6b7280" }}>
+          Belum punya akun?{" "}
+          <span
+            onClick={() => navigate("/register")}
+            style={{
+              color: "#111827",
+              fontWeight: "500",
+              cursor: "pointer",
+            }}
+          >
+            Daftar di sini
+          </span>
+        </p>
       </div>
     </div>
   );

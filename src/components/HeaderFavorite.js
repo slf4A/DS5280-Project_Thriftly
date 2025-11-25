@@ -1,23 +1,4 @@
-const favorites = [
-  {
-    id: 1,
-    name: 'Cappuccino "Oryx" blouson',
-    price: 6900000,
-    img: "/product/product1.jpeg",
-  },
-  {
-    id: 2,
-    name: "Pale caramel classic shirt",
-    price: 1025000,
-    img: "/product/product2.jpeg",
-  },
-  {
-    id: 3,
-    name: "Black lambskin jacket",
-    price: 5500000,
-    img: "/product/product3.jpeg",
-  },
-];
+import { useFavorite } from "../context/FavoriteContext";
 
 const formatRupiah = (value) =>
     value.toLocaleString("id-ID", {
@@ -27,6 +8,8 @@ const formatRupiah = (value) =>
     });
 
 function HeaderFavorite() {
+  const { favorites, toggleFavorite } = useFavorite();
+
   return (
     <div
       className="offcanvas offcanvas-end"
@@ -65,6 +48,12 @@ function HeaderFavorite() {
                   <h6 className="m-0">{item.name}</h6>
                   <small className="text-muted">{formatRupiah(item.price)}</small>
                 </div>
+                <button
+                  className="btn btn-sm btn-outline-danger ms-auto"
+                  onClick={() => toggleFavorite(item)}
+                >
+                  Hapus
+                </button>
               </li>
             ))}
           </ul>
