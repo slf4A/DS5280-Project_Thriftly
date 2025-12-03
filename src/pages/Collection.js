@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { Heart, ShoppingCart } from "react-feather";
 import { db } from "../firebase";
