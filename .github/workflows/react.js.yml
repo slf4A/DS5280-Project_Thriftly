@@ -55,4 +55,3 @@ jobs:
           push: true
           tags: |
             sifj/thriftly:latest
-            sifj/thriftly:${{ github.sha }}
