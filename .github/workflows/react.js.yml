@@ -53,5 +53,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            sifj/thriftly:latest
+          tags: sifj/thriftly:latest
