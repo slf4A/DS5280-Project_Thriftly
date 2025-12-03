@@ -60,4 +60,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: sifj/modul6-2380:latest
+          tags: sifj/thriftly:latest
