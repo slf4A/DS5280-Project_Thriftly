@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { Heart, ShoppingCart } from "react-feather";
 import { db } from "../firebase";
@@ -26,8 +26,6 @@ function Collection() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState(initialQuery);
   const [filter, setFilter] = useState(null);
-  const [page] = useState(1);
-  const pageSize = 6;
   const { favorites, toggleFavorite } = useFavorite();
   const { addToCart } = useCart();
 
